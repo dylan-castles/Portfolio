@@ -1,10 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Prueba de dominio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dylan Castles - Portfolio</title>
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Personalización Bootstrap */
+    :root {
+      --bs-primary: #1e40af; /* azul principal */
+      --bs-secondary: #2563eb; /* azul secundario */
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    header {
+      background: var(--bs-primary);
+      color: white;
+      padding: 4rem 1rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1.2rem;
+    }
+    section {
+      padding: 4rem 1rem;
+    }
+    h2 {
+      color: var(--bs-primary);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    h2::after {
+      content: "";
+      display: block;
+      width: 50px;
+      height: 3px;
+      background: var(--bs-secondary);
+      margin-top: 0.5rem;
+    }
+    .skills-list li, .projects-list li {
+      margin-bottom: 0.5rem;
+    }
+    .contact-btn {
+      background-color: var(--bs-secondary);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .contact-btn:hover {
+      background-color: #1d4ed8;
+    }
+    footer {
+      background-color: var(--bs-primary);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hola, esto es una prueba de dylancastles.com</h1>
-  <p>Todo funciona y tu dominio se mantiene en la barra de direcciones.</p>
+
+  <!-- HEADER -->
+  <header>
+    <h1>Dylan Castles</h1>
+    <p>Estudios: ASIX & DAW | Portfolio Personal</p>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container">
+
+    <!-- SOBRE MÍ -->
+    <section id="about">
+      <h2>Sobre mí</h2>
+      <p>Soy estudiante de ASIX y DAW, apasionado por la tecnología y el desarrollo web. Me encanta crear proyectos prácticos que demuestren mis conocimientos y aprender constantemente nuevas herramientas y lenguajes de programación.</p>
+    </section>
+
+    <!-- HABILIDADES -->
+    <section id="skills">
+      <h2>Conocimientos</h2>
+      <ul class="skills-list list-group list-group-flush">
+        <li class="list-group-item">HTML5, CSS3, JavaScript</li>
+        <li class="list-group-item">PHP, Python</li>
+        <li class="list-group-item">MySQL y bases de datos relacionales</li>
+        <li class="list-group-item">Git y GitHub</li>
+        <li class="list-group-item">Visual Studio Code, XAMPP</li>
+        <li class="list-group-item">Administración básica de sistemas (ASIX)</li>
+        <li class="list-group-item">Metodologías Agile y Scrum</li>
+      </ul>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section id="projects">
+      <h2>Proyectos</h2>
+      <ul class="projects-list list-group list-group-flush">
+        <li class="list-group-item">Portfolio personal en GitHub Pages</li>
+        <li class="list-group-item">Aplicaciones web con HTML, CSS, JS y PHP</li>
+        <li class="list-group-item">Bases de datos relacionales con MySQL para prácticas de DAW</li>
+      </ul>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contact" class="text-center">
+      <h2>Contacto</h2>
+      <p>Si quieres contactarme para proyectos, colaboraciones o consultas, envíame un correo:</p>
+      <a class="contact-btn" href="mailto:tuemail@example.com">Enviar correo</a>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Dylan Castles</p>
+  </footer>
+
+  <!-- Bootstrap JS (opcional, para componentes interactivos) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
