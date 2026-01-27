@@ -1,1 +1,1196 @@
-activa
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dylan Castles · Desarrollador Web Full Stack</title>
+
+  <!-- Favicon con tu foto -->
+  <link rel="icon" type="image/x-icon" style="background-color: none;" href="img/favicon.png">
+  <!-- Para compatibilidad con dispositivos Apple -->
+  <link rel="apple-touch-icon" href="img/favicon.png">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --bg-soft: #111;
+      --text: #ffffff;
+      --text-muted: #b5b5b5;
+      --accent: rgba(255,255,255,0.08);
+      --primary: #3b82f6;
+      --blur: blur(60px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    a {
+      text-decoration: none !important;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ---------- BACKGROUND BLUR ---------- */
+    .bg-blur {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.1), transparent 70%);
+      filter: var(--blur);
+      z-index: -1;
+    }
+
+    .blur-1 { top: -100px; left: -100px; }
+    .blur-2 { bottom: -150px; right: -150px; }
+
+    /* ---------- SECTIONS ---------- */
+    section {
+      padding: 80px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+    }
+
+    h1, h2, h3 {
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    h2 {
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+    }
+
+    h2:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+
+    .hero-highlight {
+      color: var(--primary);
+    }
+
+    .badge-custom {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: inline-block;
+      margin: 5px;
+    }
+
+    /* ---------- NAVIGATION ---------- */
+    .nav-fixed {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 15, 15, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      padding: 10px 20px;
+      z-index: 1000;
+    }
+
+    .nav-link-custom {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-link-custom:hover {
+      color: var(--primary);
+    }
+
+    /* ---------- CARDS ---------- */
+    .card-dark {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 30px;
+      height: 100%;
+      transition: transform 0.3s, border-color 0.3s;
+      position: relative;
+    }
+
+    .card-dark:hover {
+      transform: translateY(-5px);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    /* ---------- PROJECTS WITH VIDEO ---------- */
+    .project-video-container {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background: #000;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* Contenedor para videos verticales */
+    .vertical-video-container {
+      background: #000;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .video-horizontal {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.2s ease-out;
+      opacity: 0;
+    }
+
+    .video-vertical {
+      width: auto;
+      height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      transition: opacity 0.2s ease-out;
+      opacity: 0;
+    }
+
+    /* Estado cuando el video está activo */
+    .video-active {
+      opacity: 1 !important;
+    }
+
+    /* Estado inicial: mostrar solo el primer frame como poster */
+    .video-poster {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .video-poster.vertical {
+      object-fit: contain;
+    }
+
+    .video-playing .video-poster {
+      opacity: 0;
+      z-index: 0;
+    }
+
+    /* Indicador "Pasa el cursor" - AHORA DENTRO del contenedor del video */
+    .video-hover-indicator {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 1rem;
+      opacity: 1;
+      transition: opacity 0.3s;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid rgba(255,255,255,0.2);
+      pointer-events: none;
+    }
+
+    /* Cuando el video se está reproduciendo, ocultar el indicador */
+    .video-playing .video-hover-indicator,
+    .project-video-container:hover .video-hover-indicator,
+    .vertical-video-container:hover .video-hover-indicator {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ---------- SKILLS ---------- */
+    .skill-category {
+      margin-bottom: 30px;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.05);
+      padding: 8px 16px;
+      border-radius: 20px;
+      margin: 5px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .skill-tag-primary {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: var(--primary);
+    }
+
+    /* ---------- TIMELINE ---------- */
+    .timeline-item {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 40px;
+    }
+
+    .timeline-item:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    .timeline-item:after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 17px;
+      width: 2px;
+      height: calc(100% + 25px);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .timeline-item:last-child:after {
+      display: none;
+    }
+
+    .timeline-date {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    /* ---------- EDUCATION ---------- */
+    .education-item {
+      margin-bottom: 25px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .education-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .education-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    .education-period {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .education-institution {
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    /* ---------- CONTACT ---------- */
+    .contact-icon {
+      font-size: 1.5rem;
+      margin-right: 10px;
+      vertical-align: middle;
+      color: var(--primary);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #60a5fa;
+      text-decoration: underline;
+    }
+
+    /* ---------- DOWNLOAD BUTTONS ---------- */
+    .btn-download {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+
+    .btn-download:hover {
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      text-decoration: none;
+    }
+
+    /* ---------- IMAGE ---------- */
+    .profile-image-wrapper {
+      width: 320px;
+      height: 320px;
+      margin: auto;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #0b0b0b;
+      position: relative;
+      border: 2px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .profile-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ---------- LANGUAGES ---------- */
+    .language-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .language-name {
+      width: 100px;
+    }
+
+    .language-level {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Botón de activar sonido */
+    .sound-toggle-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s;
+    }
+
+    .sound-toggle-btn:hover {
+      background: rgba(59, 130, 246, 0.8);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      section {
+        padding: 60px 15px;
+      }
+      
+      .nav-fixed {
+        display: none;
+      }
+      
+      .profile-image-wrapper {
+        width: 250px;
+        height: 250px;
+      }
+      
+      .project-video-container,
+      .vertical-video-container {
+        height: 250px;
+      }
+      
+      .video-vertical {
+        height: 90%;
+      }
+      
+      .video-hover-indicator {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- background blur -->
+  <div class="bg-blur blur-1"></div>
+  <div class="bg-blur blur-2"></div>
+
+  <!-- Navigation -->
+  <nav class="nav-fixed">
+    <a href="#inicio" class="nav-link-custom">Inicio</a>
+    <a href="#experiencia" class="nav-link-custom">Experiencia</a>
+    <a href="#proyectos" class="nav-link-custom">Proyectos</a>
+    <a href="#conocimientos" class="nav-link-custom">Conocimientos</a>
+    <a href="#contacto" class="nav-link-custom">Contacto</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <div class="row align-items-center">
+        <!-- TEXT -->
+        <div class="col-lg-6">
+          <span class="badge-custom">Desarrollador Web Full Stack</span>
+          <h1 class="mt-3">
+            Dylan Castles
+          </h1>
+          <p class="hero-subtitle">
+            Creo aplicaciones web <span class="hero-highlight">funcionales, modernas y bien estructuradas</span> 
+            para resolver problemas reales.
+          </p>
+          <p>
+            Soy una persona flexible, comprometida y orientada a resultados, con capacidad para 
+            trabajar tanto de forma autónoma como en equipo. Me motiva afrontar retos, aprender 
+            continuamente y aportar valor en cada proyecto.
+          </p>
+          <div class="mt-4">
+            <a href="#proyectos" class="btn btn-primary me-3" style="padding: 10px 25px; border-radius: 8px;">Ver Proyectos</a>
+            <a href="#contacto" class="btn btn-outline-light" style="padding: 10px 25px; border-radius: 8px;">Contactar</a>
+          </div>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="col-lg-6 text-center mt-5 mt-lg-0">
+          <div class="profile-image-wrapper">
+            <img src="img/profile.jpeg" alt="Dylan Castles">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experiencia">
+    <div class="container">
+      <h2>Experiencia Profesional</h2>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-date">Oct 2025 – Actual</div>
+              <h4>SafeUser – Desarrollador web en prácticas</h4>
+              <p><strong>Telemático</strong></p>
+              <p>Desarrollo de aplicación para gestión de cursos Moodle con Laravel, Tailwind CSS e integración con APIs REST.</p>
+              <ul>
+                <li>Desarrollo backend en Laravel</li>
+                <li>Desarrollo frontend con Tailwind CSS</li>
+                <li>Integración con API REST de Moodle</li>
+                <li>Despliegue en Ubuntu</li>
+                <li>Diseño de arquitectura y bases de datos</li>
+                <li>Gestión de versiones con GitHub</li>
+              </ul>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-date">Ene 2024 – Jun 2024</div>
+              <h4>PCBox – Técnico informático en prácticas</h4>
+              <p><strong>Barcelona</strong></p>
+              <p>Reparación y mantenimiento de equipos, soporte técnico a clientes, instalación de software.</p>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-date">Ago 2024 – Dic 2025</div>
+              <h4>Correos – Auxiliar logístico</h4>
+              <p><strong>Barcelona (varios periodos)</strong></p>
+              <p>Clasificación y organización de paquetes, coordinación con compañeros.</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- FORMACIÓN MEJORADA -->
+        <div class="col-lg-4 mt-4 mt-lg-0">
+          <div class="card-dark">
+            <h4>Formación Académica</h4>
+            
+            <div class="education-item">
+              <div class="education-title">Grado Superior en Diseño de Aplicaciones Web</div>
+              <div class="education-period">2024 - 2025</div>
+              <div class="education-institution">Jesuïtes Bellvitge – Centro de estudios Joan XXIII</div>
+            </div>
+            
+            <div class="education-item">
+              <div class="education-title">Grado Superior en Administración de Sistemas en Red</div>
+              <div class="education-period">2023 - 2024</div>
+              <div class="education-institution">Jesuïtes Bellvitge – Centro de estudios Joan XXIII</div>
+            </div>
+            
+            <div class="education-item">
+              <div class="education-title">Bachillerato Tecnológico</div>
+              <div class="education-period">2020 - 2022</div>
+              <div class="education-institution">Jesuïtes Bellvitge – Centro de estudios Joan XXIII</div>
+            </div>
+            
+            <div class="mt-4">
+              <h5>Idiomas</h5>
+              <div class="language-item">
+                <span class="language-name">Español</span>
+                <span class="language-level">• Nativo</span>
+              </div>
+              <div class="language-item">
+                <span class="language-name">Inglés</span>
+                <span class="language-level">• Intermedio Alto (B2)</span>
+              </div>
+              <div class="language-item">
+                <span class="language-name">Catalán</span>
+                <span class="language-level">• Nativo</span>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <h5>Otros</h5>
+              <p><i class="bi bi-car-front-fill me-2"></i> Carné de conducir B</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="proyectos" style="background: rgba(15, 15, 15, 0.5);">
+    <div class="container">
+      <h2>Proyectos Destacados</h2>
+      <p class="mb-5">Proyectos personales y profesionales. Pasa el cursor sobre los videos para ver una vista previa.</p>
+      
+      <div class="row g-4">
+        <!-- Proyecto 1: DailyStudy (Video horizontal) -->
+        <div class="col-lg-6">
+          <div class="card-dark">
+            <h3>DailyStudy</h3>
+            <p class="text-primary">Proyecto Final DAW - Plataforma de aprendizaje online</p>
+            
+            <div class="project-video-container" id="dailystudy-container">
+              <!-- Poster con el primer frame -->
+              <img class="video-poster" id="dailystudy-poster" src="videos/DailyStudy-first-frame.jpg" alt="DailyStudy video preview">
+              <!-- Video del proyecto DailyStudy (horizontal) -->
+              <video class="video-horizontal" id="dailystudy-video" muted preload="auto" playsinline>
+                <source src="videos/DailyStudy.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+              </video>
+              <!-- Indicador "Pasa el cursor" DENTRO del contenedor del video -->
+              <div class="video-hover-indicator">
+                <i class="bi bi-play-fill"></i> Pasa el cursor
+              </div>
+            </div>
+            
+            <div class="mt-3">
+              <h5>Problema y solución:</h5>
+              <p>Crear una plataforma completa de gestión educativa que conecte estudiantes, profesores y empresas en un único ecosistema de aprendizaje.</p>
+              
+              <h5>Mi implicación:</h5>
+              <p>Desarrollo full-stack en equipo de 4 personas. Responsable de arquitectura backend, integración de APIs y sistema de pagos.</p>
+              
+              <h5>Características principales:</h5>
+              <ul>
+                <li>Sistema de roles (Estudiante, Profesor, Editor, Admin)</li>
+                <li>Integración con Stripe para pagos</li>
+                <li>Certificados automáticos al completar cursos</li>
+                <li>Sistema de notas personales con IA (Ollama)</li>
+                <li>Chat en tiempo real con WebSockets (Pusher)</li>
+              </ul>
+              
+              <h5>Tecnologías usadas:</h5>
+              <div>
+                <span class="skill-tag skill-tag-primary">Laravel</span>
+                <span class="skill-tag">PHP</span>
+                <span class="skill-tag">Stripe</span>
+                <span class="skill-tag">Google Sign-In</span>
+                <span class="skill-tag">WebSockets</span>
+                <span class="skill-tag">MySQL</span>
+                <span class="skill-tag">Ollama (IA)</span>
+              </div>
+              
+              <div class="mt-3">
+                <a href="prj/DailyStudy.zip" class="btn-download" download>
+                  <i class="bi bi-download"></i> Descargar proyecto
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proyecto 2: Video Promocional PCBox (Video vertical) -->
+        <div class="col-lg-6">
+          <div class="card-dark">
+            <h3>Video Promocional PCBox</h3>
+            <p class="text-primary">Prácticas ASIX - Comunicación Técnica</p>
+            
+            <div class="vertical-video-container" id="pcbox-container">
+              <!-- Poster con el primer frame -->
+              <img class="video-poster vertical" id="pcbox-poster" src="videos/pcboxVIDEO-first-frame.jpg" alt="PCBox video preview">
+              <!-- Video MP4 (vertical) -->
+              <video class="video-vertical" id="pcbox-video" preload="auto" playsinline>
+                <source src="videos/pcboxVIDEO.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+              </video>
+              <!-- Indicador "Pasa el cursor" DENTRO del contenedor del video -->
+              <div class="video-hover-indicator">
+                <i class="bi bi-play-fill"></i> Pasa el cursor
+              </div>
+              <!-- Botón para activar sonido (solo para PCBox) -->
+              <button class="sound-toggle-btn" id="pcbox-sound-toggle">
+                <i class="bi bi-volume-mute" id="pcbox-sound-icon"></i>
+              </button>
+            </div>
+            
+            <div class="mt-3">
+              <h5>Contexto:</h5>
+              <p>Durante mis prácticas como técnico informático, creé un video promocional para mostrar los servicios de reparación y soporte técnico de PCBox.</p>
+              
+              <h5>Lo que aprendí:</h5>
+              <ul>
+                <li>Comunicar servicios técnicos de forma clara y atractiva</li>
+                <li>Edición de video para propósitos profesionales</li>
+                <li>Presentar soluciones técnicas a clientes potenciales</li>
+                <li>Adaptar contenido técnico para audiencia no especializada</li>
+              </ul>
+              
+              <h5>Habilidades demostradas:</h5>
+              <div>
+                <span class="skill-tag">Edición de video</span>
+                <span class="skill-tag">Comunicación técnica</span>
+                <span class="skill-tag">Creatividad</span>
+                <span class="skill-tag">Presentación</span>
+                <span class="skill-tag">Marketing digital</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Segunda fila de proyectos -->
+      <div class="row mt-4">
+        <!-- Proyecto 3: SafeUser - Gestión de cursos Moodle -->
+        <div class="col-lg-6">
+          <div class="card-dark">
+            <h4>SafeUser - Gestión de cursos Moodle</h4>
+            <p class="text-primary">Prácticas - Desarrollo Web Completo</p>
+            
+            <div class="mt-3">
+              <p><strong>Problema:</strong> Una empresa de ciberseguridad necesitaba una plataforma para gestionar usuarios, cursos y licencias de su Moodle corporativo.</p>
+              
+              <p><strong>Mi implicación:</strong> Desarrollo full-stack en equipo pequeño (2 personas) donde diseñamos toda la arquitectura sin supervisión de un programador senior.</p>
+              
+              <h5 class="mt-3">Lo que aprendí:</h5>
+              <ul>
+                <li><strong>Trabajo en equipo autogestionado:</strong> Coordinación eficiente para dividir tareas y resolver problemas complejos juntos.</li>
+                <li><strong>Diseño de arquitectura:</strong> Tomar decisiones técnicas sobre estructura de bases de datos, APIs y flujos de trabajo desde cero.</li>
+                <li><strong>Resolución de errores:</strong> Enfrentar y solucionar problemas técnicos complejos sin supervisión directa.</li>
+                <li><strong>Comunicación con no-técnicos:</strong> Explicar decisiones técnicas y progreso a un jefe sin conocimientos de desarrollo web.</li>
+                <li><strong>Integración de APIs:</strong> Conectar con API REST de Moodle para sincronización de datos en tiempo real.</li>
+              </ul>
+              
+              <h5 class="mt-3">Tecnologías usadas:</h5>
+              <div>
+                <span class="skill-tag skill-tag-primary">Laravel</span>
+                <span class="skill-tag">PHP</span>
+                <span class="skill-tag">Tailwind CSS</span>
+                <span class="skill-tag">MySQL</span>
+                <span class="skill-tag">API REST de Moodle</span>
+                <span class="skill-tag">GitHub</span>
+                <span class="skill-tag">Ubuntu Server</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proyecto 4: App Logística Correos (Video vertical) -->
+        <div class="col-lg-6">
+          <div class="card-dark">
+            <h4>App Logística Correos</h4>
+            <p class="text-primary">Proyecto personal para optimizar trabajo</p>
+            
+            <div class="vertical-video-container" id="correos-container">
+              <!-- Poster con el primer frame -->
+              <img class="video-poster vertical" id="correos-poster" src="videos/correos-first-frame.jpg" alt="Correos app video preview">
+              <!-- Video de la app de correos (vertical) -->
+              <video class="video-vertical" id="correos-video" muted preload="auto" playsinline>
+                <source src="videos/correos.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+              </video>
+              <!-- Indicador "Pasa el cursor" DENTRO del contenedor del video -->
+              <div class="video-hover-indicator">
+                <i class="bi bi-play-fill"></i> Pasa el cursor
+              </div>
+            </div>
+            
+            <div class="mt-3">
+              <h5>Problema y solución:</h5>
+              <p>Los empleados perdían mucho tiempo buscando nombres de pueblos en mapas físicos y listas en papel. Creé una aplicación web con mapas digitales interactivos para localizaciones rápidas.</p>
+              
+              <h5>Mi implicación:</h5>
+              <p>Diseño y desarrollo completo de la aplicación para uso interno del equipo. Implementación durante mi tiempo libre para mejorar la eficiencia del trabajo.</p>
+              
+              <h5>Lo que aprendí:</h5>
+              <ul>
+                <li>Identificar necesidades reales en el entorno laboral</li>
+                <li>Crear soluciones prácticas que impacten positivamente en la productividad</li>
+                <li>Desarrollar aplicaciones útiles aunque no formen parte de mis responsabilidades oficiales</li>
+                <li>Trabajar con mapas digitales</li>
+                <li>Feedback real de usuarios finales (mis compañeros)</li>
+              </ul>
+              
+              <div class="mt-3">
+                <a href="prj/appLogisticaCorreos.zip" class="btn-download" download>
+                  <i class="bi bi-download"></i> Descargar código fuente
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="conocimientos">
+    <div class="container">
+      <h2>Conocimientos Técnicos</h2>
+      
+      <div class="row">
+        <div class="col-md-4 skill-category">
+          <h4>Desarrollo Web</h4>
+          <div>
+            <span class="skill-tag skill-tag-primary">Laravel</span>
+            <span class="skill-tag skill-tag-primary">PHP</span>
+            <span class="skill-tag skill-tag-primary">JavaScript</span>
+            <span class="skill-tag">HTML5/CSS3</span>
+            <span class="skill-tag">AJAX</span>
+            <span class="skill-tag">Tailwind CSS</span>
+            <span class="skill-tag">Bootstrap</span>
+            <span class="skill-tag">Leaflet.js</span>
+          </div>
+        </div>
+        
+        <div class="col-md-4 skill-category">
+          <h4>Bases de Datos & APIs</h4>
+          <div>
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">APIs REST</span>
+            <span class="skill-tag">Stripe</span>
+            <span class="skill-tag">Google APIs</span>
+            <span class="skill-tag">WebSockets</span>
+            <span class="skill-tag">Moodle API</span>
+          </div>
+        </div>
+        
+        <div class="col-md-4 skill-category">
+          <h4>Sistemas & DevOps</h4>
+          <div>
+            <span class="skill-tag">Ubuntu/Debian</span>
+            <span class="skill-tag">Windows Server</span>
+            <span class="skill-tag">Apache</span>
+            <span class="skill-tag">Git/GitHub</span>
+            <span class="skill-tag">DNS/DHCP</span>
+            <span class="skill-tag">Kali Linux</span>
+            <span class="skill-tag">Docker</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card-dark">
+            <h4>Competencias Personales</h4>
+            <p>• Resolución de problemas complejos<br>
+               • Pensamiento lógico y analítico<br>
+               • Aprendizaje autónomo rápido<br>
+               • Iniciativa y proactividad<br>
+               • Trabajo en equipo eficiente<br>
+               • Comunicación técnica clara</p>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="card-dark">
+            <h4>Metodología de trabajo</h4>
+            <p>Enfoque práctico y orientado a resultados:</p>
+            <div>
+              <span class="skill-tag">Trabajo en equipo pequeño</span>
+              <span class="skill-tag">Diseño de arquitectura</span>
+              <span class="skill-tag">Resolución de problemas</span>
+              <span class="skill-tag">Comunicación técnica</span>
+              <span class="skill-tag">Autogestión</span>
+              <span class="skill-tag">Planificación Agile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contacto">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h2>Contacto</h2>
+          <p>¿Tienes un proyecto interesante o buscas un desarrollador comprometido? ¡Hablemos!</p>
+          
+          <div class="mt-4">
+            <p><i class="bi bi-envelope contact-icon"></i> 
+              <a href="mailto:dylancastlescazalla@gmail.com">dylancastlescazalla@gmail.com</a>
+            </p>
+            
+            <p><i class="bi bi-telephone contact-icon"></i> 
+              <a href="tel:644407213">644 407 213</a>
+            </p>
+            
+            <p><i class="bi bi-github contact-icon"></i> 
+              <a href="https://github.com/dylan-castles" target="_blank">GitHub / dylan-castles</a>
+            </p>
+            
+            <p><i class="bi bi-linkedin contact-icon"></i> 
+              <a href="https://www.linkedin.com/in/dylan-castles-2a39432ba" target="_blank">LinkedIn / dylan-castles</a>
+            </p>
+            
+            <p><i class="bi bi-geo-alt contact-icon"></i> 
+              Pallejà, Barcelona (Disponible para remoto/híbrido)
+            </p>
+          </div>
+        </div>
+        
+        <div class="col-lg-6 mt-4 mt-lg-0">
+          <div class="card-dark">
+            <h4>Disponibilidad y Objetivo</h4>
+            <p>Actualmente buscando oportunidades como <strong>Desarrollador Web Junior</strong> o <strong>Full Stack Developer</strong>.</p>
+            <p>Interesado en proyectos que impliquen:</p>
+            <ul>
+              <li>Desarrollo backend con Laravel/PHP</li>
+              <li>Integración de APIs y servicios de terceros</li>
+              <li>Aplicaciones web completas de principio a fin</li>
+              <li>Proyectos con impacto real y visibilidad</li>
+              <li>Trabajo en equipo con metodologías ágiles</li>
+              <li>Oportunidades de aprendizaje y crecimiento</li>
+            </ul>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dylancastlescazalla@gmail.com&su=Contacto desde portfolio" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="btn btn-primary mt-3">
+                Enviar mensaje
+            </a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 · Dylan Castles · Desarrollador Web Full Stack</p>
+      <p class="text-muted small mt-2">Portfolio desarrollado con HTML5, CSS3, Bootstrap 5 y JavaScript</p>
+    </div>
+  </footer>
+
+  <script>
+    // Configuración simplificada para usar imágenes PNG como previews
+    document.addEventListener('DOMContentLoaded', function() {
+      // Configurar cada video
+      const videoConfigs = [
+        {
+          id: 'dailystudy-video',
+          posterId: 'dailystudy-poster',
+          containerId: 'dailystudy-container',
+          muted: true,
+          loop: true,
+          posterImage: 'videos/DailyStudy-first-frame.jpg' // Imagen del primer frame
+        },
+        {
+          id: 'pcbox-video',
+          posterId: 'pcbox-poster', 
+          containerId: 'pcbox-container',
+          muted: true,
+          loop: true,
+          hasSound: true,
+          posterImage: 'videos/pcboxVIDEO-first-frame.jpg' // Imagen del primer frame
+        },
+        {
+          id: 'correos-video',
+          posterId: 'correos-poster',
+          containerId: 'correos-container',
+          muted: true,
+          loop: true,
+          posterImage: 'videos/correos-first-frame.jpg' // Imagen del primer frame
+        }
+      ];
+
+      // Asignar las imágenes PNG a los posters
+      videoConfigs.forEach(config => {
+        const poster = document.getElementById(config.posterId);
+        const video = document.getElementById(config.id);
+        const container = document.getElementById(config.containerId);
+        
+        if (poster && video && container) {
+          // Asignar la imagen PNG como preview
+          if (config.posterImage) {
+            poster.src = config.posterImage;
+            poster.style.display = 'block';
+          }
+          
+          // Configurar el video
+          video.muted = config.muted;
+          video.loop = config.loop;
+          video.playsInline = true;
+          video.preload = 'auto';
+          
+          // Configurar hover para el video
+          let isPlaying = false;
+          
+          container.addEventListener('mouseenter', function() {
+            if (!isPlaying) {
+              video.currentTime = 0;
+              video.play().then(() => {
+                isPlaying = true;
+                video.classList.add('video-active');
+                container.classList.add('video-playing');
+              }).catch(error => {
+                console.log('Autoplay bloqueado:', video.id, error);
+              });
+            }
+          });
+          
+          container.addEventListener('mouseleave', function() {
+            if (isPlaying) {
+              video.pause();
+              video.currentTime = 0;
+              video.classList.remove('video-active');
+              container.classList.remove('video-playing');
+              isPlaying = false;
+            }
+          });
+          
+          // Click para reproducir/pausar
+          container.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // Para PCBox, el manejo de sonido es especial
+            if (video.id === 'pcbox-video') {
+              return; // El botón de sonido manejará esto
+            }
+            
+            if (isPlaying) {
+              video.pause();
+              video.currentTime = 0;
+              video.classList.remove('video-active');
+              container.classList.remove('video-playing');
+              isPlaying = false;
+            } else {
+              video.currentTime = 0;
+              video.play().then(() => {
+                isPlaying = true;
+                video.classList.add('video-active');
+                container.classList.add('video-playing');
+              }).catch(error => {
+                console.log('Error al reproducir:', error);
+              });
+            }
+          });
+        }
+      });
+
+      // Configuración especial para el video de PCBox con sonido
+      function setupPCBoxVideo() {
+        const pcboxVideo = document.getElementById('pcbox-video');
+        const pcboxContainer = document.getElementById('pcbox-container');
+        const soundToggle = document.getElementById('pcbox-sound-toggle');
+        const soundIcon = document.getElementById('pcbox-sound-icon');
+        
+        if (!pcboxVideo) return;
+        
+        let soundEnabled = false;
+        let isPlaying = false;
+        
+        // Configurar el botón de sonido si existe
+        if (soundToggle && soundIcon) {
+          soundToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            if (!soundEnabled) {
+              // Habilitar sonido
+              pcboxVideo.muted = false;
+              soundEnabled = true;
+              soundIcon.className = 'bi bi-volume-up';
+              soundToggle.style.background = 'rgba(59, 130, 246, 0.9)';
+              
+              // Si el video está reproduciéndose, aplicar sonido
+              if (isPlaying) {
+                pcboxVideo.muted = false;
+              }
+              
+              // Intentar reproducir ahora con sonido
+              if (!isPlaying) {
+                pcboxVideo.currentTime = 0;
+                pcboxVideo.play().then(() => {
+                  isPlaying = true;
+                  pcboxVideo.classList.add('video-active');
+                  pcboxContainer.classList.add('video-playing');
+                }).catch(error => {
+                  console.log('Error al reproducir PCBox con sonido:', error);
+                });
+              }
+            } else {
+              // Deshabilitar sonido
+              pcboxVideo.muted = true;
+              soundEnabled = false;
+              soundIcon.className = 'bi bi-volume-mute';
+              soundToggle.style.background = 'rgba(0, 0, 0, 0.7)';
+            }
+          });
+        }
+        
+        // Hover normal (sin sonido por defecto)
+        pcboxContainer.addEventListener('mouseenter', function() {
+          if (!isPlaying) {
+            pcboxVideo.currentTime = 0;
+            pcboxVideo.muted = true; // Sin sonido en hover
+            pcboxVideo.play().then(() => {
+              isPlaying = true;
+              pcboxVideo.classList.add('video-active');
+              pcboxContainer.classList.add('video-playing');
+            }).catch(error => {
+              console.log('Hover autoplay bloqueado:', error);
+            });
+          }
+        });
+        
+        pcboxContainer.addEventListener('mouseleave', function() {
+          if (isPlaying && !soundEnabled) {
+            pcboxVideo.pause();
+            pcboxVideo.currentTime = 0;
+            pcboxVideo.classList.remove('video-active');
+            pcboxContainer.classList.remove('video-playing');
+            isPlaying = false;
+          }
+        });
+        
+        // Click en el contenedor (excepto en el botón de sonido)
+        pcboxContainer.addEventListener('click', function(e) {
+          if (soundToggle && e.target === soundToggle) return;
+          
+          if (isPlaying && !soundEnabled) {
+            pcboxVideo.pause();
+            pcboxVideo.currentTime = 0;
+            pcboxVideo.classList.remove('video-active');
+            pcboxContainer.classList.remove('video-playing');
+            isPlaying = false;
+          } else if (!isPlaying) {
+            pcboxVideo.currentTime = 0;
+            pcboxVideo.muted = true; // Sin sonido por defecto
+            pcboxVideo.play().then(() => {
+              isPlaying = true;
+              pcboxVideo.classList.add('video-active');
+              pcboxContainer.classList.add('video-playing');
+            }).catch(error => {
+              console.log('Click play error:', error);
+            });
+          }
+        });
+      }
+      
+      // Configurar video de PCBox
+      setupPCBoxVideo();
+
+      // Navegación suave
+      document.querySelectorAll('.nav-link-custom').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
